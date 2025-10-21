@@ -6,18 +6,13 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-export function Input({ 
-  icon: Icon, 
-  error,
-  className = '',
-  ...props 
-}: InputProps) {
+export function Input({ icon: Icon, error, className = '', ...props }: InputProps) {
   return (
     <div className="space-y-1">
       <div className="relative">
         {Icon && (
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-skin-secondary">
-            <Icon className="w-5 h-5" />
+            <Icon className="h-5 w-5" />
           </div>
         )}
         <input
@@ -25,9 +20,7 @@ export function Input({
           {...props}
         />
       </div>
-      {error && (
-        <p className="text-sm text-red-500">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   );
 }

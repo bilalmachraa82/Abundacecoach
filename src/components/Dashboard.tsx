@@ -17,12 +17,21 @@ import { t } from '../utils/i18n';
 export default function Dashboard() {
   const { transactions, loading, error, addTransaction } = useTransactions();
 
-  const metrics = React.useMemo(() => ({
-    totalIncome: transactions.reduce((sum, t) => sum + (t.type === 'income' ? t.amount : 0), 0),
-    totalExpenses: transactions.reduce((sum, t) => sum + (t.type === 'expense' ? t.amount : 0), 0),
-    balance: transactions.reduce((sum, t) => sum + (t.type === 'income' ? t.amount : -t.amount), 0),
-    monthlyGoalProgress: 75,
-  }), [transactions]);
+  const metrics = React.useMemo(
+    () => ({
+      totalIncome: transactions.reduce((sum, t) => sum + (t.type === 'income' ? t.amount : 0), 0),
+      totalExpenses: transactions.reduce(
+        (sum, t) => sum + (t.type === 'expense' ? t.amount : 0),
+        0
+      ),
+      balance: transactions.reduce(
+        (sum, t) => sum + (t.type === 'income' ? t.amount : -t.amount),
+        0
+      ),
+      monthlyGoalProgress: 75,
+    }),
+    [transactions]
+  );
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState message={error.message} />;
@@ -32,29 +41,29 @@ export default function Dashboard() {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   });
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white p-4 shadow-sm mb-4">
-        <h1 className="text-2xl font-bold text-gray-900 capitalize">{formattedDate}</h1>
+      <header className="mb-4 bg-white p-4 shadow-sm">
+        <h1 className="text-2xl font-bold capitalize text-gray-900">{formattedDate}</h1>
       </header>
 
-      <div className="px-4 space-y-4 pb-20 md:pb-8">
+      <div className="space-y-4 px-4 pb-20 md:pb-8">
         <DailyQuote />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <DashboardMetrics metrics={metrics} />
           <WeeklyMetrics transactions={transactions} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <CashFlowChart transactions={transactions} />
           <ExpenseBreakdown transactions={transactions} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <IncomeSourceChart transactions={transactions} />
           <MonthlyReport transactions={transactions} />
           <SavingsGoal target={5000} current={3750} />
@@ -68,11 +77,19 @@ export default function Dashboard() {
 
       {/* Fixed Add Transaction Button for Mobile */}
       <button
-        onClick={() => document.getElementById('transaction-form')?.scrollIntoView({ behavior: 'smooth' })}
-        className="fixed right-4 bottom-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors md:hidden"
+        onClick={() =>
+          document.getElementById('transaction-form')?.scrollIntoView({ behavior: 'smooth' })
+        }
+        className="fixed bottom-4 right-4 rounded-full bg-blue-500 p-4 text-white shadow-lg transition-colors hover:bg-blue-600 md:hidden"
         aria-label="Add Transaction"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
         </svg>
       </button>

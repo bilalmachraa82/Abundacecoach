@@ -9,16 +9,16 @@ export function DailyCode() {
   const codeInfo = grabovoiCodes.find(c => c.code === dailyCode);
 
   return (
-    <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl p-6 text-white">
-      <div className="flex items-center justify-between mb-4">
+    <div className="rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 p-6 text-white">
+      <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">Código Grabovoi do Dia</h2>
-        <div className="p-2 bg-white bg-opacity-20 rounded-lg">
-          <Sparkles className="w-5 h-5" />
+        <div className="rounded-lg bg-white bg-opacity-20 p-2">
+          <Sparkles className="h-5 w-5" />
         </div>
       </div>
 
-      <div className="text-center space-y-4">
-        <div className="text-3xl font-mono font-bold">{dailyCode}</div>
+      <div className="space-y-4 text-center">
+        <div className="font-mono text-3xl font-bold">{dailyCode}</div>
         <div>
           <h3 className="text-xl font-medium">{codeInfo?.name}</h3>
           <p className="text-sm text-white text-opacity-90">{codeInfo?.description}</p>

@@ -7,11 +7,11 @@ interface SwipeableListProps<T> {
   onSwipeRight?: (item: T) => void;
 }
 
-export function SwipeableList<T>({ 
-  items, 
-  renderItem, 
-  onSwipeLeft, 
-  onSwipeRight 
+export function SwipeableList<T>({
+  items,
+  renderItem,
+  onSwipeLeft,
+  onSwipeRight,
 }: SwipeableListProps<T>) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const touchStart = useRef<number>(0);
@@ -24,7 +24,7 @@ export function SwipeableList<T>({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (activeIndex === null) return;
-    
+
     const currentX = e.touches[0].clientX;
     const diff = currentX - touchStart.current;
     currentOffset.current = diff;
@@ -36,7 +36,7 @@ export function SwipeableList<T>({
   const handleTouchEnd = (e: React.TouchEvent, item: T) => {
     const element = e.currentTarget as HTMLElement;
     element.style.transform = '';
-    
+
     if (Math.abs(currentOffset.current) > 100) {
       if (currentOffset.current > 0 && onSwipeRight) {
         onSwipeRight(item);
@@ -54,9 +54,9 @@ export function SwipeableList<T>({
       {items.map((item, index) => (
         <div
           key={index}
-          onTouchStart={(e) => handleTouchStart(e, index)}
+          onTouchStart={e => handleTouchStart(e, index)}
           onTouchMove={handleTouchMove}
-          onTouchEnd={(e) => handleTouchEnd(e, item)}
+          onTouchEnd={e => handleTouchEnd(e, item)}
           className="transition-transform duration-200 ease-out"
         >
           {renderItem(item, index)}

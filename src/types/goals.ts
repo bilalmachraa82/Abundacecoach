@@ -10,7 +10,7 @@ export interface Goal {
   notes?: string;
 }
 
-export type GoalCategory = 
+export type GoalCategory =
   | 'emergency_fund'
   | 'retirement'
   | 'house'

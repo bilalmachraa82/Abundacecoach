@@ -7,7 +7,7 @@ const settingsSections = [
   {
     title: 'Import Data',
     icon: Upload,
-    component: BankStatementUpload
+    component: BankStatementUpload,
   },
   {
     title: 'Appearance',
@@ -23,8 +23,13 @@ const settingsSections = [
     options: [
       { id: 'email', label: 'Email Notifications', type: 'toggle', value: true },
       { id: 'push', label: 'Push Notifications', type: 'toggle', value: true },
-      { id: 'frequency', label: 'Frequency', type: 'select', value: 'daily', 
-        choices: ['daily', 'weekly', 'monthly'] },
+      {
+        id: 'frequency',
+        label: 'Frequency',
+        type: 'select',
+        value: 'daily',
+        choices: ['daily', 'weekly', 'monthly'],
+      },
     ],
   },
   {
@@ -32,18 +37,33 @@ const settingsSections = [
     icon: Lock,
     options: [
       { id: '2fa', label: 'Two-Factor Authentication', type: 'toggle', value: false },
-      { id: 'session', label: 'Session Timeout', type: 'select', value: '30min',
-        choices: ['15min', '30min', '1hour', '4hours'] },
+      {
+        id: 'session',
+        label: 'Session Timeout',
+        type: 'select',
+        value: '30min',
+        choices: ['15min', '30min', '1hour', '4hours'],
+      },
     ],
   },
   {
     title: 'Language & Region',
     icon: Languages,
     options: [
-      { id: 'language', label: 'Language', type: 'select', value: 'pt-PT',
-        choices: ['en-US', 'pt-PT', 'es-ES', 'fr-FR'] },
-      { id: 'currency', label: 'Currency', type: 'select', value: 'EUR',
-        choices: ['EUR', 'USD', 'GBP'] },
+      {
+        id: 'language',
+        label: 'Language',
+        type: 'select',
+        value: 'pt-PT',
+        choices: ['en-US', 'pt-PT', 'es-ES', 'fr-FR'],
+      },
+      {
+        id: 'currency',
+        label: 'Currency',
+        type: 'select',
+        value: 'EUR',
+        choices: ['EUR', 'USD', 'GBP'],
+      },
     ],
   },
 ];
@@ -52,8 +72,8 @@ export default function Settings() {
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-3">
-        <div className="p-2 bg-blue-50 rounded-lg">
-          <SettingsIcon className="w-6 h-6 text-blue-500" />
+        <div className="rounded-lg bg-blue-50 p-2">
+          <SettingsIcon className="h-6 w-6 text-blue-500" />
         </div>
         <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
       </div>
@@ -61,11 +81,11 @@ export default function Settings() {
       <SetupSection />
 
       <div className="space-y-6">
-        {settingsSections.map((section) => (
-          <div key={section.title} className="bg-white rounded-xl p-6 shadow-sm">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <section.icon className="w-5 h-5 text-blue-500" />
+        {settingsSections.map(section => (
+          <div key={section.title} className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="mb-6 flex items-center space-x-3">
+              <div className="rounded-lg bg-blue-50 p-2">
+                <section.icon className="h-5 w-5 text-blue-500" />
               </div>
               <h2 className="text-lg font-semibold">{section.title}</h2>
             </div>
@@ -91,7 +111,7 @@ export default function Settings() {
                       </button>
                     ) : (
                       <select className="form-select rounded-md border-gray-300 text-sm">
-                        {choices?.map((choice) => (
+                        {choices?.map(choice => (
                           <option key={choice} value={choice}>
                             {choice}
                           </option>

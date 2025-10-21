@@ -14,21 +14,19 @@ export const useRecurringStore = create<RecurringStore>()(
   persist(
     (set, get) => ({
       recurring: [],
-      addRecurring: (transaction) =>
-        set((state) => ({
+      addRecurring: transaction =>
+        set(state => ({
           recurring: [...state.recurring, { ...transaction, id: crypto.randomUUID() }],
         })),
       updateRecurring: (id, updates) =>
-        set((state) => ({
-          recurring: state.recurring.map((t) =>
-            t.id === id ? { ...t, ...updates } : t
-          ),
+        set(state => ({
+          recurring: state.recurring.map(t => (t.id === id ? { ...t, ...updates } : t)),
         })),
-      deleteRecurring: (id) =>
-        set((state) => ({
-          recurring: state.recurring.filter((t) => t.id !== id),
+      deleteRecurring: id =>
+        set(state => ({
+          recurring: state.recurring.filter(t => t.id !== id),
         })),
-      getNextOccurrence: (transaction) => {
+      getNextOccurrence: transaction => {
         const today = new Date();
         const lastProcessed = transaction.lastProcessed
           ? new Date(transaction.lastProcessed)

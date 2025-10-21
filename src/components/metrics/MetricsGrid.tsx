@@ -21,7 +21,7 @@ export function MetricsGrid({ metrics }: MetricsGridProps) {
       icon: Wallet,
       trend: { value: 10, positive: true },
       color: 'text-green-600',
-      bgColor: 'bg-green-50'
+      bgColor: 'bg-green-50',
     },
     {
       title: t('totalExpenses'),
@@ -29,31 +29,31 @@ export function MetricsGrid({ metrics }: MetricsGridProps) {
       icon: LineChart,
       trend: { value: 5, positive: false },
       color: 'text-red-600',
-      bgColor: 'bg-red-50'
+      bgColor: 'bg-red-50',
     },
     {
       title: t('balance'),
       value: formatCurrency(metrics.balance),
       icon: TrendingUp,
       color: 'text-blue-600',
-      bgColor: 'bg-blue-50'
+      bgColor: 'bg-blue-50',
     },
     {
       title: t('goalProgress'),
       value: `${metrics.monthlyGoalProgress}%`,
       icon: Target,
       color: 'text-purple-600',
-      bgColor: 'bg-purple-50'
-    }
+      bgColor: 'bg-purple-50',
+    },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {cards.map((card) => (
+    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      {cards.map(card => (
         <MetricCard
           key={card.title}
           {...card}
-          className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+          className="rounded-xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
         />
       ))}
     </div>

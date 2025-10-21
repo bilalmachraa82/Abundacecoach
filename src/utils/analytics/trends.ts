@@ -48,7 +48,7 @@ export function predictNextMonth(trends: MonthlyTrend[]): MonthlyTrend {
 
   const income = trends.reduce((sum, t) => sum + t.income, 0) / trends.length;
   const expenses = trends.reduce((sum, t) => sum + t.expenses, 0) / trends.length;
-  
+
   const predictedIncome = income * 1.02;
   const predictedExpenses = expenses * 0.98;
 
@@ -56,6 +56,6 @@ export function predictNextMonth(trends: MonthlyTrend[]): MonthlyTrend {
     month: 'Next',
     income: Math.round(predictedIncome),
     expenses: Math.round(predictedExpenses),
-    savings: Math.round(predictedIncome - predictedExpenses)
+    savings: Math.round(predictedIncome - predictedExpenses),
   };
 }

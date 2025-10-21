@@ -32,16 +32,19 @@ export function useAICoach() {
         transactions,
         savingsRate,
         monthlyIncome,
-        monthlyExpenses
+        monthlyExpenses,
       });
 
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
     } catch (error) {
       console.error('AI processing failed:', error);
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'I apologize, but I encountered an error. Please try again.'
-      }]);
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'I apologize, but I encountered an error. Please try again.',
+        },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -63,6 +66,6 @@ export function useAICoach() {
     messages,
     sendMessage,
     analyzeSpending,
-    loading
+    loading,
   };
 }

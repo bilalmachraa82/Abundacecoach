@@ -11,7 +11,7 @@ interface DashboardMetricsProps {
 
 export function DashboardMetrics({ metrics }: DashboardMetricsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
       <MetricCard
         title={t('totalIncome')}
         value={formatCurrency(metrics.totalIncome)}
@@ -24,11 +24,7 @@ export function DashboardMetrics({ metrics }: DashboardMetricsProps) {
         icon={LineChart}
         trend={{ value: 5, positive: false }}
       />
-      <MetricCard
-        title={t('balance')}
-        value={formatCurrency(metrics.balance)}
-        icon={PieChart}
-      />
+      <MetricCard title={t('balance')} value={formatCurrency(metrics.balance)} icon={PieChart} />
       <MetricCard
         title={t('goalProgress')}
         value={`${metrics.monthlyGoalProgress}%`}

@@ -12,22 +12,25 @@ export async function analyzeTransactions(transactions: Transaction[]) {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const savingsRate = calculateSavingsRate(monthlyIncome, monthlyExpenses);
-  
+
   // Generate insights
   const insights = [];
 
   if (savingsRate < 20) {
     insights.push(
-      "Your savings rate is below the recommended 20%. Consider reducing non-essential expenses."
+      'Your savings rate is below the recommended 20%. Consider reducing non-essential expenses.'
     );
   }
 
   const expensesByCategory = transactions
     .filter(t => t.type === 'expense')
-    .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + t.amount;
-      return acc;
-    }, {} as Record<string, number>);
+    .reduce(
+      (acc, t) => {
+        acc[t.category] = (acc[t.category] || 0) + t.amount;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
   const topExpenses = Object.entries(expensesByCategory)
     .sort(([, a], [, b]) => b - a)

@@ -7,10 +7,10 @@ interface ReceiptData {
 export function extractReceiptData(text: string): ReceiptData {
   // Remove special characters and normalize whitespace
   const normalizedText = text.replace(/[^\w\s.,€$]/g, ' ').replace(/\s+/g, ' ');
-  
+
   // Find amount - look for currency symbols and numbers
   const amountMatch = normalizedText.match(/[€$]?\s*\d+[.,]\d{2}/);
-  const amount = amountMatch 
+  const amount = amountMatch
     ? parseFloat(amountMatch[0].replace(/[€$\s]/g, '').replace(',', '.'))
     : 0;
 
@@ -26,7 +26,7 @@ export function extractReceiptData(text: string): ReceiptData {
 
 function determineCategoryFromText(text: string): string | undefined {
   const lowercaseText = text.toLowerCase();
-  
+
   const categoryKeywords: Record<string, string[]> = {
     groceries: ['supermarket', 'grocery', 'food', 'market'],
     dining: ['restaurant', 'cafe', 'coffee', 'bar'],

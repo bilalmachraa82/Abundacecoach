@@ -23,8 +23,8 @@ export default function Budget() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Budget Overview</h1>
-        <button className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-          <PiggyBank className="w-5 h-5" />
+        <button className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
+          <PiggyBank className="h-5 w-5" />
           <span>Adjust Budget</span>
         </button>
       </div>
@@ -35,24 +35,22 @@ export default function Budget() {
           const isOverBudget = spent > budget;
 
           return (
-            <div key={category} className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
+            <div key={category} className="rounded-xl bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-lg font-medium text-gray-900">{category}</h3>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-500">
                     {formatCurrency(spent)} of {formatCurrency(budget)}
                   </span>
-                  {isOverBudget && (
-                    <AlertCircle className="w-5 h-5 text-red-500" />
-                  )}
+                  {isOverBudget && <AlertCircle className="h-5 w-5 text-red-500" />}
                 </div>
               </div>
 
               <div className="relative pt-1">
-                <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-100">
+                <div className="flex h-2 overflow-hidden rounded bg-gray-100 text-xs">
                   <div
                     style={{ width: `${Math.min(percentage, 100)}%` }}
-                    className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${
+                    className={`flex flex-col justify-center whitespace-nowrap text-center text-white shadow-none ${
                       isOverBudget ? 'bg-red-500' : 'bg-blue-500'
                     }`}
                   />

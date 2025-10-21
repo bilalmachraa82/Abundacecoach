@@ -6,7 +6,7 @@ import {
   Meditation,
   FengShuiTip,
   ManifestationEntry,
-  GenerosityLog
+  GenerosityLog,
 } from '../types/wellbeing';
 
 interface WellbeingState {
@@ -26,7 +26,7 @@ interface WellbeingState {
 
 export const useWellbeingStore = create<WellbeingState>()(
   persist(
-    (set) => ({
+    set => ({
       gratitudeEntries: [],
       affirmations: [],
       meditations: [],
@@ -34,50 +34,34 @@ export const useWellbeingStore = create<WellbeingState>()(
       manifestations: [],
       generosityLogs: [],
 
-      addGratitudeEntry: (entry) =>
-        set((state) => ({
-          gratitudeEntries: [
-            { ...entry, id: crypto.randomUUID() },
-            ...state.gratitudeEntries,
-          ],
+      addGratitudeEntry: entry =>
+        set(state => ({
+          gratitudeEntries: [{ ...entry, id: crypto.randomUUID() }, ...state.gratitudeEntries],
         })),
 
-      addAffirmation: (affirmation) =>
-        set((state) => ({
-          affirmations: [
-            { ...affirmation, id: crypto.randomUUID() },
-            ...state.affirmations,
-          ],
+      addAffirmation: affirmation =>
+        set(state => ({
+          affirmations: [{ ...affirmation, id: crypto.randomUUID() }, ...state.affirmations],
         })),
 
       updateMeditationProgress: (id, completed) =>
-        set((state) => ({
-          meditations: state.meditations.map((m) =>
-            m.id === id ? { ...m, completed } : m
-          ),
+        set(state => ({
+          meditations: state.meditations.map(m => (m.id === id ? { ...m, completed } : m)),
         })),
 
-      addManifestationEntry: (entry) =>
-        set((state) => ({
-          manifestations: [
-            { ...entry, id: crypto.randomUUID() },
-            ...state.manifestations,
-          ],
+      addManifestationEntry: entry =>
+        set(state => ({
+          manifestations: [{ ...entry, id: crypto.randomUUID() }, ...state.manifestations],
         })),
 
       updateManifestationProgress: (id, progress) =>
-        set((state) => ({
-          manifestations: state.manifestations.map((m) =>
-            m.id === id ? { ...m, progress } : m
-          ),
+        set(state => ({
+          manifestations: state.manifestations.map(m => (m.id === id ? { ...m, progress } : m)),
         })),
 
-      addGenerosityLog: (log) =>
-        set((state) => ({
-          generosityLogs: [
-            { ...log, id: crypto.randomUUID() },
-            ...state.generosityLogs,
-          ],
+      addGenerosityLog: log =>
+        set(state => ({
+          generosityLogs: [{ ...log, id: crypto.randomUUID() }, ...state.generosityLogs],
         })),
     }),
     {

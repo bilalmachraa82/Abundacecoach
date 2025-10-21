@@ -14,21 +14,22 @@ interface SetupState {
 
 export const useSetupStore = create<SetupState>()(
   persist(
-    (set) => ({
+    set => ({
       isInitialized: false,
       monthlyData: monthlyTotals2024,
-      categoryAmounts: categoryAmounts,
-      setInitialized: (value) => set({ isInitialized: value }),
-      updateMonthlyData: (data) => set({ monthlyData: data }),
-      updateCategoryAmounts: (data) => set({ categoryAmounts: data }),
-      resetData: () => set({
-        monthlyData: monthlyTotals2024,
-        categoryAmounts: categoryAmounts,
-        isInitialized: false
-      })
+      categoryAmounts,
+      setInitialized: value => set({ isInitialized: value }),
+      updateMonthlyData: data => set({ monthlyData: data }),
+      updateCategoryAmounts: data => set({ categoryAmounts: data }),
+      resetData: () =>
+        set({
+          monthlyData: monthlyTotals2024,
+          categoryAmounts,
+          isInitialized: false,
+        }),
     }),
     {
-      name: 'finance-setup-storage'
+      name: 'finance-setup-storage',
     }
   )
 );

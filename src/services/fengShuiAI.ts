@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { config } from '../config/env';
+import { logger } from '../utils/logger';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(config.gemini.apiKey);
 
 interface ConversationContext {
   lastAdvice?: string;
@@ -40,16 +42,16 @@ export async function getFengShuiAdvice(prompt: string) {
 
     const result = await model.generateContent(contextPrompt);
     const response = await result.response;
-    
+
     context = {
       lastAdvice: response.text(),
       lastTopic: prompt,
-      userMood: detectUserMood(prompt)
+      userMood: detectUserMood(prompt),
     };
 
     return response.text();
   } catch (error) {
-    console.error('Feng Shui AI processing failed:', error);
+    logger.error('Feng Shui AI processing failed', error as Error, { prompt });
     return 'Ups, tive um pequeno problema. Podemos tentar de novo?';
   }
 }

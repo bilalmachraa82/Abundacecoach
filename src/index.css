@@ -12,7 +12,7 @@
 
 @layer components {
   .nav-item {
-    @apply flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors;
+    @apply flex items-center space-x-3 rounded-lg px-4 py-3 transition-colors;
   }
 
   .nav-item.active {
@@ -20,24 +20,18 @@
   }
 
   .button-primary {
-    @apply px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 
-           disabled:opacity-50 disabled:cursor-not-allowed transition-colors;
+    @apply rounded-lg bg-primary px-4 py-2 text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .button-secondary {
-    @apply px-4 py-2 bg-skin-card text-skin-primary border border-skin-border rounded-lg 
-           hover:bg-skin-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors;
+    @apply rounded-lg border border-skin-border bg-skin-card px-4 py-2 text-skin-primary transition-colors hover:bg-skin-hover disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .input {
-    @apply w-full px-[var(--input-padding)] py-[var(--input-padding)] bg-skin-secondary
-           border border-skin-border rounded-lg text-skin-primary
-           focus:ring-2 focus:ring-primary/50 focus:border-primary
-           disabled:opacity-50 disabled:cursor-not-allowed transition-colors;
+    @apply w-full rounded-lg border border-skin-border bg-skin-secondary px-[var(--input-padding)] py-[var(--input-padding)] text-skin-primary transition-colors focus:border-primary focus:ring-2 focus:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .card {
-    @apply bg-skin-card rounded-xl shadow-sm p-[var(--card-padding)] 
-           border border-skin-border transition-colors;
+    @apply rounded-xl border border-skin-border bg-skin-card p-[var(--card-padding)] shadow-sm transition-colors;
   }
 }

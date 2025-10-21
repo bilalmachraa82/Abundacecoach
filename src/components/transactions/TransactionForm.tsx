@@ -22,7 +22,7 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
       description,
       amount: Number(amount),
       category,
-      type
+      type,
     });
     setDescription('');
     setAmount('');
@@ -34,20 +34,18 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm mb-8">
-      <div className="flex items-center justify-between mb-6">
+    <form onSubmit={handleSubmit} className="mb-8 rounded-xl bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">{t('addTransaction')}</h2>
-        <div className="p-2 bg-blue-50 rounded-lg">
-          <PlusCircle className="w-5 h-5 text-blue-500" />
+        <div className="rounded-lg bg-blue-50 p-2">
+          <PlusCircle className="h-5 w-5 text-blue-500" />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t('type')}
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">{t('type')}</label>
             <div className="flex space-x-4">
               <label className="inline-flex items-center">
                 <input
@@ -56,7 +54,7 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
                   name="type"
                   value="income"
                   checked={type === 'income'}
-                  onChange={(e) => handleTypeChange(e.target.value as 'income' | 'expense')}
+                  onChange={e => handleTypeChange(e.target.value as 'income' | 'expense')}
                 />
                 <span className="ml-2">{t('income')}</span>
               </label>
@@ -67,7 +65,7 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
                   name="type"
                   value="expense"
                   checked={type === 'expense'}
-                  onChange={(e) => handleTypeChange(e.target.value as 'income' | 'expense')}
+                  onChange={e => handleTypeChange(e.target.value as 'income' | 'expense')}
                 />
                 <span className="ml-2">{t('expense')}</span>
               </label>
@@ -75,14 +73,14 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700">
               {t('description')}
             </label>
             <input
               type="text"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              onChange={e => setDescription(e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
               required
             />
           </div>
@@ -90,14 +88,12 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t('amount')}
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">{t('amount')}</label>
             <input
               type="number"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              onChange={e => setAmount(e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
               required
               min="0"
               step="0.01"
@@ -105,14 +101,8 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {t('category')}
-            </label>
-            <CategorySelect
-              type={type}
-              value={category}
-              onChange={setCategory}
-            />
+            <label className="mb-1 block text-sm font-medium text-gray-700">{t('category')}</label>
+            <CategorySelect type={type} value={category} onChange={setCategory} />
           </div>
         </div>
       </div>
@@ -120,7 +110,7 @@ export function TransactionForm({ onSubmit }: TransactionFormProps) {
       <div className="mt-6">
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-200"
+          className="w-full rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
         >
           {t('add')}
         </button>

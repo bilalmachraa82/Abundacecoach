@@ -34,51 +34,78 @@ export default function App() {
       <AuthProvider>
         <ThemeProvider>
           <Routes>
-            <Route path="/" element={
-              <Layout showPeriodSelector>
-                <Dashboard />
-              </Layout>
-            } />
-            <Route path="/transactions" element={
-              <Layout>
-                <Transactions />
-              </Layout>
-            } />
-            <Route path="/analytics" element={
-              <Layout showPeriodSelector>
-                <Analytics />
-              </Layout>
-            } />
-            <Route path="/goals" element={
-              <Layout>
-                <Goals />
-              </Layout>
-            } />
-            <Route path="/budget" element={
-              <Layout>
-                <Budget />
-              </Layout>
-            } />
-            <Route path="/grabovoi" element={
-              <Layout>
-                <Grabovoi />
-              </Layout>
-            } />
-            <Route path="/wellbeing" element={
-              <Layout>
-                <Wellbeing />
-              </Layout>
-            } />
-            <Route path="/ai-coach" element={
-              <Layout>
-                <AICoach />
-              </Layout>
-            } />
-            <Route path="/settings" element={
-              <Layout>
-                <Settings />
-              </Layout>
-            } />
+            <Route
+              path="/"
+              element={
+                <Layout showPeriodSelector>
+                  <Dashboard />
+                </Layout>
+              }
+            />
+            <Route
+              path="/transactions"
+              element={
+                <Layout>
+                  <Transactions />
+                </Layout>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <Layout showPeriodSelector>
+                  <Analytics />
+                </Layout>
+              }
+            />
+            <Route
+              path="/goals"
+              element={
+                <Layout>
+                  <Goals />
+                </Layout>
+              }
+            />
+            <Route
+              path="/budget"
+              element={
+                <Layout>
+                  <Budget />
+                </Layout>
+              }
+            />
+            <Route
+              path="/grabovoi"
+              element={
+                <Layout>
+                  <Grabovoi />
+                </Layout>
+              }
+            />
+            <Route
+              path="/wellbeing"
+              element={
+                <Layout>
+                  <Wellbeing />
+                </Layout>
+              }
+            />
+            <Route
+              path="/ai-coach"
+              element={
+                <Layout>
+                  <AICoach />
+                </Layout>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <Layout>
+                  <Settings />
+                </Layout>
+              }
+            />
           </Routes>
         </ThemeProvider>
       </AuthProvider>

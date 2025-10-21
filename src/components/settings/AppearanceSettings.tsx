@@ -6,12 +6,12 @@ export function AppearanceSettings() {
   const { isDark, isCompact, toggleDarkMode, toggleCompactMode } = useThemeStore();
 
   return (
-    <div className="bg-skin-card rounded-xl p-6 border border-skin-border">
+    <div className="rounded-xl border border-skin-border bg-skin-card p-6">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-skin-hover rounded-lg">
-              <Moon className="w-5 h-5 text-skin-primary" />
+            <div className="rounded-lg bg-skin-hover p-2">
+              <Moon className="h-5 w-5 text-skin-primary" />
             </div>
             <div>
               <h3 className="font-medium text-skin-primary">Dark Mode</h3>
@@ -34,8 +34,8 @@ export function AppearanceSettings() {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-skin-hover rounded-lg">
-              <Smartphone className="w-5 h-5 text-skin-primary" />
+            <div className="rounded-lg bg-skin-hover p-2">
+              <Smartphone className="h-5 w-5 text-skin-primary" />
             </div>
             <div>
               <h3 className="font-medium text-skin-primary">Compact Mode</h3>

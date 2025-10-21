@@ -22,11 +22,11 @@ const bankFormats: Record<string, BankFormat> = {
     amountIndex: 3,
     typeIndex: 4,
     minimumFields: 5,
-    parseDate: (value) => new Date(value.split('-').reverse().join('-')),
-    parseDescription: (value) => value.trim(),
-    parseAmount: (value) => Math.abs(parseFloat(value.replace(',', '.'))),
-    parseType: (value) => value.includes('CRED') ? 'income' : 'expense',
-    guessCategory: (description) => guessCategoryFromDescription(description)
+    parseDate: value => new Date(value.split('-').reverse().join('-')),
+    parseDescription: value => value.trim(),
+    parseAmount: value => Math.abs(parseFloat(value.replace(',', '.'))),
+    parseType: value => (value.includes('CRED') ? 'income' : 'expense'),
+    guessCategory: description => guessCategoryFromDescription(description),
   },
   caixaGeral: {
     name: 'Caixa Geral de Depósitos',
@@ -36,12 +36,12 @@ const bankFormats: Record<string, BankFormat> = {
     amountIndex: 2,
     typeIndex: 3,
     minimumFields: 4,
-    parseDate: (value) => new Date(value.split('/').reverse().join('-')),
-    parseDescription: (value) => value.trim(),
-    parseAmount: (value) => Math.abs(parseFloat(value.replace(',', '.'))),
-    parseType: (value) => value.includes('+') ? 'income' : 'expense',
-    guessCategory: (description) => guessCategoryFromDescription(description)
-  }
+    parseDate: value => new Date(value.split('/').reverse().join('-')),
+    parseDescription: value => value.trim(),
+    parseAmount: value => Math.abs(parseFloat(value.replace(',', '.'))),
+    parseType: value => (value.includes('+') ? 'income' : 'expense'),
+    guessCategory: description => guessCategoryFromDescription(description),
+  },
 };
 
 export function detectBankFormat(headerLine: string): BankFormat {
@@ -52,13 +52,13 @@ export function detectBankFormat(headerLine: string): BankFormat {
 
 function guessCategoryFromDescription(description: string): string {
   const lowerDesc = description.toLowerCase();
-  
+
   // Common Portuguese transaction patterns
   if (lowerDesc.includes('supermercado') || lowerDesc.includes('continente')) return 'groceries';
   if (lowerDesc.includes('restaurante') || lowerDesc.includes('cafetaria')) return 'dining';
   if (lowerDesc.includes('combustivel') || lowerDesc.includes('galp')) return 'fuel';
   if (lowerDesc.includes('vodafone') || lowerDesc.includes('meo')) return 'utilities';
   if (lowerDesc.includes('salario') || lowerDesc.includes('vencimento')) return 'salary';
-  
+
   return 'other';
 }

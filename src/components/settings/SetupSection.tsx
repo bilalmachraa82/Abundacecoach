@@ -15,23 +15,23 @@ export function SetupSection() {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="p-2 bg-blue-50 rounded-lg">
-          <RefreshCw className="w-5 h-5 text-blue-500" />
+    <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center space-x-3">
+        <div className="rounded-lg bg-blue-50 p-2">
+          <RefreshCw className="h-5 w-5 text-blue-500" />
         </div>
         <h2 className="text-lg font-semibold">Initial Setup</h2>
       </div>
 
       <div className="space-y-4">
         <p className="text-gray-600">
-          Reset your initial setup data including monthly totals and category amounts.
-          This will remove all customizations and return to the setup wizard.
+          Reset your initial setup data including monthly totals and category amounts. This will
+          remove all customizations and return to the setup wizard.
         </p>
 
         <button
           onClick={handleReset}
-          className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
+          className="w-full rounded-lg bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600"
         >
           Reset Setup Data
         </button>

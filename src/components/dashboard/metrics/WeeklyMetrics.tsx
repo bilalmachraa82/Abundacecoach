@@ -41,7 +41,7 @@ export function WeeklyMetrics({ transactions }: WeeklyMetricsProps) {
         icon={Wallet}
         trend={{
           value: calculatePercentageChange(metrics.lastWeekIncome, metrics.income),
-          positive: metrics.income >= metrics.lastWeekIncome
+          positive: metrics.income >= metrics.lastWeekIncome,
         }}
       />
       <MetricCard
@@ -50,7 +50,7 @@ export function WeeklyMetrics({ transactions }: WeeklyMetricsProps) {
         icon={Wallet}
         trend={{
           value: calculatePercentageChange(metrics.lastWeekExpenses, metrics.expenses),
-          positive: metrics.expenses <= metrics.lastWeekExpenses
+          positive: metrics.expenses <= metrics.lastWeekExpenses,
         }}
       />
     </div>

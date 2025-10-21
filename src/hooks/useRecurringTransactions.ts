@@ -11,9 +11,9 @@ export function useRecurringTransactions() {
     const processRecurring = () => {
       const today = new Date();
 
-      recurring.forEach((transaction) => {
+      recurring.forEach(transaction => {
         const nextOccurrence = getNextOccurrence(transaction);
-        
+
         if (nextOccurrence && nextOccurrence <= today) {
           // Create the transaction
           addTransaction({

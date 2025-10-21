@@ -13,8 +13,8 @@ export function CategorySelect({ type, value, onChange }: CategorySelectProps) {
     return (
       <select
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+        onChange={e => onChange(e.target.value)}
+        className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
       >
         <optgroup label={t('business')}>
           {Object.entries(INCOME_CATEGORIES.BUSINESS).map(([key, value]) => (
@@ -30,8 +30,8 @@ export function CategorySelect({ type, value, onChange }: CategorySelectProps) {
   return (
     <select
       value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+      onChange={e => onChange(e.target.value)}
+      className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
     >
       {Object.entries(EXPENSE_CATEGORIES).map(([groupKey, group]) => (
         <optgroup key={groupKey} label={t(groupKey.toLowerCase())}>

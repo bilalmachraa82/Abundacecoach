@@ -4,12 +4,7 @@ import { X } from 'lucide-react';
 interface AddGoalModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (goal: {
-    name: string;
-    target: number;
-    category: string;
-    deadline: Date;
-  }) => void;
+  onSubmit: (goal: { name: string; target: number; category: string; deadline: Date }) => void;
 }
 
 export function AddGoalModal({ isOpen, onClose, onSubmit }: AddGoalModalProps) {
@@ -32,51 +27,45 @@ export function AddGoalModal({ isOpen, onClose, onSubmit }: AddGoalModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 w-full max-w-md">
-        <div className="flex justify-between items-center mb-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-md rounded-xl bg-white p-6">
+        <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-semibold">Add New Goal</h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
-            <X className="w-5 h-5" />
+          <button onClick={onClose} className="rounded-full p-2 hover:bg-gray-100">
+            <X className="h-5 w-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Goal Name
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Goal Name</label>
             <input
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              onChange={e => setName(e.target.value)}
+              className="w-full rounded-md border px-3 py-2"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Target Amount
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Target Amount</label>
             <input
               type="number"
               value={target}
-              onChange={(e) => setTarget(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              onChange={e => setTarget(e.target.value)}
+              className="w-full rounded-md border px-3 py-2"
               required
               min="0"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Category
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Category</label>
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              onChange={e => setCategory(e.target.value)}
+              className="w-full rounded-md border px-3 py-2"
             >
               <option value="emergency_fund">Emergency Fund</option>
               <option value="retirement">Retirement</option>
@@ -89,21 +78,19 @@ export function AddGoalModal({ isOpen, onClose, onSubmit }: AddGoalModalProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Target Date
-            </label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Target Date</label>
             <input
               type="date"
               value={deadline}
-              onChange={(e) => setDeadline(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              onChange={e => setDeadline(e.target.value)}
+              className="w-full rounded-md border px-3 py-2"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            className="w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           >
             Create Goal
           </button>
