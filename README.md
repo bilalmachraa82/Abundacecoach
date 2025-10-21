@@ -92,11 +92,15 @@ See [SECURITY.md](SECURITY.md) for details.
 
 ## 📊 Project Stats
 
-- **57 React Components**
+- **60+ React Components** (3 new budget components)
 - **15 Utility Functions**
-- **7 Zustand Stores**
+- **9 Zustand Stores** (+2: budget, settings)
 - **5 Custom Hooks**
+- **3 Database Tables** (transactions, budgets, user_settings)
 - **15 Tests** (expanding)
+- **Bundle Size:** 359KB (60% reduction!)
+- **PWA Ready:** ✅
+- **Offline Support:** ✅
 
 ## 🗺️ Roadmap
 
