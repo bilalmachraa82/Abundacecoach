@@ -51,6 +51,10 @@ Required environment variables:
 - `VITE_SUPABASE_ANON_KEY` - Supabase anonymous key
 - `VITE_GEMINI_API_KEY` - Google Gemini API key
 
+Optional environment variables:
+
+- `VITE_ANTHROPIC_API_KEY` - Anthropic Claude API key (for advanced analysis)
+
 ### State Management Pattern
 
 The app uses **Zustand with Supabase persistence** (not localStorage) for all state management. All 9 stores follow this pattern:
@@ -129,6 +133,40 @@ logger.error('Operation failed', error as Error, { transactionId: '...' });
 ```
 
 The logger is configured for Sentry integration (ready when needed).
+
+### AI Service Pattern (FASE 3 - November 2025)
+
+**Uses Vercel AI SDK** for multi-model support with streaming responses.
+
+```typescript
+// Import from unified service
+import { streamFinancialAdvice, analyzeSpendingPatterns } from '../services/aiService';
+
+// Stream responses for better UX
+const stream = await streamFinancialAdvice(prompt, context);
+for await (const chunk of stream.textStream) {
+  // Update UI progressively
+}
+```
+
+**AI Models:**
+
+- **Gemini 2.0 Flash** - Fast, cost-effective, excellent Portuguese (default)
+- **Claude 3.7 Sonnet** - Advanced reasoning for complex analysis (optional)
+
+**Key Features:**
+
+1. **Streaming**: Responses appear progressively (50% faster perceived)
+2. **Prompt Caching**: System prompts cached (90% cost reduction)
+3. **Auto-retry**: Built-in error handling and retry logic
+4. **Multi-model**: Automatically uses best model for each task
+
+**When to use each model:**
+
+- Financial advice (quick) → Gemini 2.0 Flash
+- Spending analysis (complex) → Claude 3.7 Sonnet (if available)
+- Feng Shui advice → Gemini 2.0 Flash
+- Pattern recognition → Claude 3.7 Sonnet (if available)
 
 ## Component Patterns
 

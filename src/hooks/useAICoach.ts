@@ -1,11 +1,17 @@
+/**
+ * AI Coach Hook - Enhanced with Streaming (2025)
+ * Uses Vercel AI SDK for better UX and performance
+ */
 import { useState } from 'react';
 import { useTransactions } from './useTransactions';
-import { getFinancialAdvice, analyzeSpendingPatterns } from '../services/ai';
+import { streamFinancialAdvice, analyzeSpendingPatterns } from '../services/aiService';
 import { calculateSavingsRate } from '../utils/calculations';
+import { logger } from '../utils/logger';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  isStreaming?: boolean;
 }
 
 export function useAICoach() {
@@ -28,21 +34,49 @@ export function useAICoach() {
 
       const savingsRate = calculateSavingsRate(monthlyIncome, monthlyExpenses);
 
-      const response = await getFinancialAdvice(content, {
+      // Add empty assistant message that will be filled with streaming
+      const messageIndex = messages.length + 1;
+      setMessages(prev => [...prev, { role: 'assistant', content: '', isStreaming: true }]);
+
+      const stream = await streamFinancialAdvice(content, {
         transactions,
         savingsRate,
         monthlyIncome,
         monthlyExpenses,
       });
 
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+      // Stream the response
+      let fullResponse = '';
+      for await (const chunk of stream.textStream) {
+        fullResponse += chunk;
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[messageIndex] = {
+            role: 'assistant',
+            content: fullResponse,
+            isStreaming: true,
+          };
+          return newMessages;
+        });
+      }
+
+      // Mark streaming as complete
+      setMessages(prev => {
+        const newMessages = [...prev];
+        newMessages[messageIndex] = {
+          role: 'assistant',
+          content: fullResponse,
+          isStreaming: false,
+        };
+        return newMessages;
+      });
     } catch (error) {
-      console.error('AI processing failed:', error);
+      logger.error('AI processing failed', error as Error);
       setMessages(prev => [
         ...prev,
         {
           role: 'assistant',
-          content: 'I apologize, but I encountered an error. Please try again.',
+          content: 'Desculpa, mas estou com algumas dificuldades. Podes tentar novamente?',
         },
       ]);
     } finally {
@@ -56,7 +90,7 @@ export function useAICoach() {
       const analysis = await analyzeSpendingPatterns(transactions);
       setMessages(prev => [...prev, { role: 'assistant', content: analysis }]);
     } catch (error) {
-      console.error('Spending analysis failed:', error);
+      logger.error('Spending analysis failed', error as Error);
     } finally {
       setLoading(false);
     }

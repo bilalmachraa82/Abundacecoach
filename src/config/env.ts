@@ -12,6 +12,9 @@ interface EnvConfig {
   gemini: {
     apiKey: string;
   };
+  anthropic?: {
+    apiKey: string;
+  };
   app: {
     environment: 'development' | 'production' | 'test';
   };
@@ -29,6 +32,11 @@ export function validateEnv(): EnvConfig {
     VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
     VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY,
     VITE_GEMINI_API_KEY: import.meta.env.VITE_GEMINI_API_KEY,
+  };
+
+  // Optional variables
+  const optionalVars = {
+    VITE_ANTHROPIC_API_KEY: import.meta.env.VITE_ANTHROPIC_API_KEY,
   };
 
   // Validate presence
@@ -73,7 +81,7 @@ export function validateEnv(): EnvConfig {
     throw new Error(errorMessage);
   }
 
-  return {
+  const config: EnvConfig = {
     supabase: {
       url: requiredVars.VITE_SUPABASE_URL,
       anonKey: requiredVars.VITE_SUPABASE_ANON_KEY,
@@ -85,6 +93,19 @@ export function validateEnv(): EnvConfig {
       environment: (import.meta.env.MODE as EnvConfig['app']['environment']) || 'development',
     },
   };
+
+  // Add optional Anthropic config if provided
+  if (optionalVars.VITE_ANTHROPIC_API_KEY && optionalVars.VITE_ANTHROPIC_API_KEY.trim() !== '') {
+    const anthropicKey = optionalVars.VITE_ANTHROPIC_API_KEY;
+    // Check for placeholder
+    if (!placeholders.some(placeholder => anthropicKey.includes(placeholder))) {
+      config.anthropic = {
+        apiKey: anthropicKey,
+      };
+    }
+  }
+
+  return config;
 }
 
 /**
@@ -104,7 +125,13 @@ export const config = {
   gemini: {
     apiKey: env.gemini.apiKey,
   },
+  anthropic: env.anthropic
+    ? {
+        apiKey: env.anthropic.apiKey,
+      }
+    : undefined,
   isDevelopment: env.app.environment === 'development',
   isProduction: env.app.environment === 'production',
   isTest: env.app.environment === 'test',
+  hasAnthropic: !!env.anthropic,
 } as const;

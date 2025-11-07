@@ -36,6 +36,9 @@ export function AIChat() {
               }`}
             >
               {msg.content}
+              {msg.isStreaming && (
+                <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-purple-600"></span>
+              )}
             </div>
           </div>
         ))}

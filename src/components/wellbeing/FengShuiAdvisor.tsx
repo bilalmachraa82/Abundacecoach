@@ -1,10 +1,16 @@
+/**
+ * Feng Shui Advisor - Enhanced with Streaming (2025)
+ * Uses Vercel AI SDK for better UX
+ */
 import React, { useState } from 'react';
 import { Compass, Send, Loader } from 'lucide-react';
-import { getFengShuiAdvice } from '../../services/fengShuiAI';
+import { streamFengShuiAdvice } from '../../services/aiService';
+import { logger } from '../../utils/logger';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  isStreaming?: boolean;
 }
 
 export function FengShuiAdvisor() {
@@ -22,10 +28,39 @@ export function FengShuiAdvisor() {
     setLoading(true);
 
     try {
-      const response = await getFengShuiAdvice(userMessage);
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+      // Add empty assistant message that will be filled with streaming
+      const messageIndex = messages.length + 1;
+      setMessages(prev => [...prev, { role: 'assistant', content: '', isStreaming: true }]);
+
+      const stream = await streamFengShuiAdvice(userMessage);
+
+      // Stream the response
+      let fullResponse = '';
+      for await (const chunk of stream.textStream) {
+        fullResponse += chunk;
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[messageIndex] = {
+            role: 'assistant',
+            content: fullResponse,
+            isStreaming: true,
+          };
+          return newMessages;
+        });
+      }
+
+      // Mark streaming as complete
+      setMessages(prev => {
+        const newMessages = [...prev];
+        newMessages[messageIndex] = {
+          role: 'assistant',
+          content: fullResponse,
+          isStreaming: false,
+        };
+        return newMessages;
+      });
     } catch (error) {
-      console.error('Failed to get Feng Shui advice:', error);
+      logger.error('Failed to get Feng Shui advice', error as Error);
       setMessages(prev => [
         ...prev,
         {
@@ -84,6 +119,9 @@ export function FengShuiAdvisor() {
               }`}
             >
               {msg.content}
+              {msg.isStreaming && (
+                <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-amber-600"></span>
+              )}
             </div>
           </div>
         ))}
