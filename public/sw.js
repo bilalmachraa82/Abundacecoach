@@ -3,11 +3,20 @@
  * Best Practice 2025: Workbox-inspired caching strategies
  */
 
-const CACHE_NAME = 'abundancecoach-v1';
+const CACHE_NAME = 'abundancecoach-v2';
 const RUNTIME_CACHE = 'abundancecoach-runtime';
 
 // Assets to cache on install
-const PRECACHE_ASSETS = ['/', '/index.html', '/manifest.json'];
+const PRECACHE_ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/offline.html',
+  '/icon-192.svg',
+  '/icon-512.svg',
+  '/icon-transaction.svg',
+  '/icon-dashboard.svg',
+];
 
 // Install event - cache essential assets
 self.addEventListener('install', event => {
@@ -97,8 +106,8 @@ self.addEventListener('push', event => {
   const title = data.title || 'AbundanceCoach';
   const options = {
     body: data.body || 'Nova atualização disponível',
-    icon: '/icon-192.png',
-    badge: '/badge-72.png',
+    icon: '/icon-192.svg',
+    badge: '/icon-192.svg',
     vibrate: [200, 100, 200],
     data: data.url || '/',
     actions: [

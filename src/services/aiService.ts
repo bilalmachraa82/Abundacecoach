@@ -8,6 +8,7 @@ import { google } from '@ai-sdk/google';
 import { anthropic } from '@ai-sdk/anthropic';
 import { config } from '../config/env';
 import { logger } from '../utils/logger';
+import { withRateLimit } from '../utils/rateLimiter';
 import { Transaction } from '../types/finance';
 
 /**
@@ -62,31 +63,33 @@ Diretrizes:
  */
 export async function getFinancialAdvice(prompt: string, context: FinancialContext) {
   try {
-    const contextPrompt = `
-      Situação financeira atual:
-      Rendimento Mensal: ${context.monthlyIncome}€
-      Despesas Mensais: ${context.monthlyExpenses}€
-      Taxa de Poupança: ${context.savingsRate}%
+    return await withRateLimit('AI_QUERY', 'financial-advice', async () => {
+      const contextPrompt = `
+        Situação financeira atual:
+        Rendimento Mensal: ${context.monthlyIncome}€
+        Despesas Mensais: ${context.monthlyExpenses}€
+        Taxa de Poupança: ${context.savingsRate}%
 
-      Transações recentes:
-      ${context.transactions
-        .slice(0, 3)
-        .map(
-          t => `- ${t.type === 'income' ? 'Rendimento' : 'Despesa'}: ${t.amount}€ (${t.category})`
-        )
-        .join('\n')}
+        Transações recentes:
+        ${context.transactions
+          .slice(0, 3)
+          .map(
+            t => `- ${t.type === 'income' ? 'Rendimento' : 'Despesa'}: ${t.amount}€ (${t.category})`
+          )
+          .join('\n')}
 
-      Pergunta: ${prompt}
-    `;
+        Pergunta: ${prompt}
+      `;
 
-    const result = await generateText({
-      model: MODELS.gemini,
-      messages: [FINANCIAL_ADVISOR_SYSTEM, { role: 'user', content: contextPrompt }],
-      temperature: 0.7,
-      maxTokens: 300,
+      const result = await generateText({
+        model: MODELS.gemini,
+        messages: [FINANCIAL_ADVISOR_SYSTEM, { role: 'user', content: contextPrompt }],
+        temperature: 0.7,
+        maxTokens: 300,
+      });
+
+      return result.text;
     });
-
-    return result.text;
   } catch (error) {
     logger.error('AI financial advice failed', error as Error, {
       prompt,
@@ -218,14 +221,16 @@ Conhecimentos integrados:
  */
 export async function getFengShuiAdvice(prompt: string) {
   try {
-    const result = await generateText({
-      model: MODELS.gemini,
-      messages: [FENG_SHUI_SYSTEM, { role: 'user', content: prompt }],
-      temperature: 0.8, // Higher temperature for creative responses
-      maxTokens: 200,
-    });
+    return await withRateLimit('AI_QUERY', 'feng-shui-advice', async () => {
+      const result = await generateText({
+        model: MODELS.gemini,
+        messages: [FENG_SHUI_SYSTEM, { role: 'user', content: prompt }],
+        temperature: 0.8, // Higher temperature for creative responses
+        maxTokens: 200,
+      });
 
-    return result.text;
+      return result.text;
+    });
   } catch (error) {
     logger.error('Feng Shui AI processing failed', error as Error, { prompt });
     return 'Ups, tive um pequeno problema. Podemos tentar de novo?';

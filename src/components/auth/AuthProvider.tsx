@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { User } from '@supabase/supabase-js';
+import { withRateLimit } from '../../utils/rateLimiter';
+import { logger } from '../../utils/logger';
 
 interface AuthContextType {
   user: User | null;
@@ -44,12 +46,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     loading,
     signIn: async (email: string, password: string) => {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+      try {
+        await withRateLimit('LOGIN', email, async () => {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+        });
+      } catch (error) {
+        logger.error('Sign in failed', error as Error, { email });
+        throw error;
+      }
     },
     signUp: async (email: string, password: string) => {
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
+      try {
+        await withRateLimit('SIGNUP', email, async () => {
+          const { error } = await supabase.auth.signUp({ email, password });
+          if (error) throw error;
+        });
+      } catch (error) {
+        logger.error('Sign up failed', error as Error, { email });
+        throw error;
+      }
     },
     signOut: async () => {
       const { error } = await supabase.auth.signOut();
