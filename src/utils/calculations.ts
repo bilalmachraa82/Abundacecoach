@@ -8,7 +8,10 @@ export function calculateSavingsRate(income: number, expenses: number): number {
   return Math.round(((income - expenses) / income) * 100);
 }
 
-export function calculateDebtToIncomeRatio(monthlyDebtPayments: number, monthlyIncome: number): number {
+export function calculateDebtToIncomeRatio(
+  monthlyDebtPayments: number,
+  monthlyIncome: number
+): number {
   if (monthlyIncome === 0) return 0;
   return Math.round((monthlyDebtPayments / monthlyIncome) * 100);
 }

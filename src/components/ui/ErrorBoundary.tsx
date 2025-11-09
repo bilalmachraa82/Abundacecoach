@@ -11,7 +11,7 @@ interface State {
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
-    hasError: false
+    hasError: false,
   };
 
   public static getDerivedStateFromError(error: Error): State {
@@ -25,15 +25,15 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="bg-white p-8 rounded-xl shadow-sm max-w-md w-full">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Algo correu mal</h2>
-            <p className="text-gray-600 mb-6">
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+          <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-sm">
+            <h2 className="mb-4 text-2xl font-semibold text-gray-900">Algo correu mal</h2>
+            <p className="mb-6 text-gray-600">
               Pedimos desculpa pelo inconveniente. Por favor, tente recarregar a página.
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              className="w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
             >
               Recarregar Página
             </button>

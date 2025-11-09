@@ -24,19 +24,10 @@ export function BottomSheet({ isOpen, onClose, children }: BottomSheetProps) {
 
   return (
     <>
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 fade-in"
-        onClick={onClose}
-      />
-      <div 
-        ref={sheetRef}
-        className="bottom-sheet slide-up"
-        style={{ maxHeight: '90vh' }}
-      >
+      <div className="fade-in fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
+      <div ref={sheetRef} className="bottom-sheet slide-up" style={{ maxHeight: '90vh' }}>
         <div className="bottom-sheet-handle" />
-        <div className="overflow-y-auto px-4 pb-6">
-          {children}
-        </div>
+        <div className="overflow-y-auto px-4 pb-6">{children}</div>
       </div>
     </>
   );

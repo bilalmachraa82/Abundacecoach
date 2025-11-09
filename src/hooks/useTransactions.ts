@@ -26,18 +26,21 @@ export function useTransactions() {
   }, []);
 
   const updateCache = useCallback((data: Transaction[]) => {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-      data,
-      timestamp: Date.now()
-    }));
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({
+        data,
+        timestamp: Date.now(),
+      })
+    );
   }, []);
 
   const fetchTransactions = useCallback(async () => {
     if (!user) return;
-    
+
     try {
       setLoading(true);
-      
+
       // Try to get cached data first
       const cached = getCachedTransactions();
       if (cached) {
@@ -53,11 +56,12 @@ export function useTransactions() {
         .order('date', { ascending: false });
 
       if (fetchError) throw fetchError;
-      
-      const parsedData = data?.map(t => ({
-        ...t,
-        date: new Date(t.date)
-      })) || [];
+
+      const parsedData =
+        data?.map(t => ({
+          ...t,
+          date: new Date(t.date),
+        })) || [];
 
       setTransactions(parsedData);
       updateCache(parsedData);
@@ -68,36 +72,41 @@ export function useTransactions() {
     }
   }, [user, getCachedTransactions, updateCache]);
 
-  const addTransaction = useCallback(async (transaction: Omit<Transaction, 'id'>) => {
-    if (!user) return;
-    
-    try {
-      const { data, error: insertError } = await supabase
-        .from('transactions')
-        .insert([{
-          ...transaction,
-          user_id: user.id,
-          date: transaction.date.toISOString()
-        }])
-        .select()
-        .single();
+  const addTransaction = useCallback(
+    async (transaction: Omit<Transaction, 'id'>) => {
+      if (!user) return;
 
-      if (insertError) throw insertError;
+      try {
+        const { data, error: insertError } = await supabase
+          .from('transactions')
+          .insert([
+            {
+              ...transaction,
+              user_id: user.id,
+              date: transaction.date.toISOString(),
+            },
+          ])
+          .select()
+          .single();
 
-      const newTransaction = {
-        ...data,
-        date: new Date(data.date)
-      };
+        if (insertError) throw insertError;
 
-      setTransactions(prev => {
-        const updated = [newTransaction, ...prev];
-        updateCache(updated);
-        return updated;
-      });
-    } catch (e) {
-      setError(e as Error);
-    }
-  }, [user, updateCache]);
+        const newTransaction = {
+          ...data,
+          date: new Date(data.date),
+        };
+
+        setTransactions(prev => {
+          const updated = [newTransaction, ...prev];
+          updateCache(updated);
+          return updated;
+        });
+      } catch (e) {
+        setError(e as Error);
+      }
+    },
+    [user, updateCache]
+  );
 
   useEffect(() => {
     if (user) {
@@ -112,6 +121,6 @@ export function useTransactions() {
     loading,
     error,
     addTransaction,
-    refetch: fetchTransactions
+    refetch: fetchTransactions,
   };
 }

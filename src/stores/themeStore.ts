@@ -10,11 +10,11 @@ interface ThemeState {
 
 export const useThemeStore = create<ThemeState>()(
   persist(
-    (set) => ({
+    set => ({
       isDark: false,
       isCompact: false,
-      toggleDarkMode: () => set((state) => ({ isDark: !state.isDark })),
-      toggleCompactMode: () => set((state) => ({ isCompact: !state.isCompact })),
+      toggleDarkMode: () => set(state => ({ isDark: !state.isDark })),
+      toggleCompactMode: () => set(state => ({ isCompact: !state.isCompact })),
     }),
     {
       name: 'theme-storage',

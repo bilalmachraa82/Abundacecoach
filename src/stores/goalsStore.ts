@@ -12,27 +12,29 @@ interface GoalsState {
 
 export const useGoalsStore = create<GoalsState>()(
   persist(
-    (set) => ({
+    set => ({
       goals: [],
-      addGoal: (goal) => set((state) => ({
-        goals: [...state.goals, { ...goal, id: crypto.randomUUID() }]
-      })),
-      updateGoal: (id, updates) => set((state) => ({
-        goals: state.goals.map((goal) =>
-          goal.id === id ? { ...goal, ...updates } : goal
-        )
-      })),
-      deleteGoal: (id) => set((state) => ({
-        goals: state.goals.filter((goal) => goal.id !== id)
-      })),
-      updateProgress: (id, amount) => set((state) => ({
-        goals: state.goals.map((goal) =>
-          goal.id === id ? { ...goal, current: goal.current + amount } : goal
-        )
-      }))
+      addGoal: goal =>
+        set(state => ({
+          goals: [...state.goals, { ...goal, id: crypto.randomUUID() }],
+        })),
+      updateGoal: (id, updates) =>
+        set(state => ({
+          goals: state.goals.map(goal => (goal.id === id ? { ...goal, ...updates } : goal)),
+        })),
+      deleteGoal: id =>
+        set(state => ({
+          goals: state.goals.filter(goal => goal.id !== id),
+        })),
+      updateProgress: (id, amount) =>
+        set(state => ({
+          goals: state.goals.map(goal =>
+            goal.id === id ? { ...goal, current: goal.current + amount } : goal
+          ),
+        })),
     }),
     {
-      name: 'finance-goals-storage'
+      name: 'finance-goals-storage',
     }
   )
 );

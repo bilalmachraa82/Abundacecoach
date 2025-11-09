@@ -5,11 +5,7 @@ export interface GrabovoiCode {
   category: GrabovoiCategory;
 }
 
-export type GrabovoiCategory = 
-  | 'prosperity'
-  | 'financial_harmony'
-  | 'wellbeing'
-  | 'relationships';
+export type GrabovoiCategory = 'prosperity' | 'financial_harmony' | 'wellbeing' | 'relationships';
 
 export interface GrabovoiLog {
   id: string;

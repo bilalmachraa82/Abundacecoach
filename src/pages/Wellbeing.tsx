@@ -9,13 +9,13 @@ export default function Wellbeing() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Bem-Estar Financeiro</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <GratitudeJournal />
         <DailyAffirmations />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <FengShuiAdvisor />
         <ManifestationTracker />
       </div>

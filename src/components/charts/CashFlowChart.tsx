@@ -25,7 +25,10 @@ export function CashFlowChart({ transactions }: CashFlowChartProps) {
       return {
         month,
         income: monthTransactions.reduce((sum, t) => sum + (t.type === 'income' ? t.amount : 0), 0),
-        expenses: monthTransactions.reduce((sum, t) => sum + (t.type === 'expense' ? t.amount : 0), 0),
+        expenses: monthTransactions.reduce(
+          (sum, t) => sum + (t.type === 'expense' ? t.amount : 0),
+          0
+        ),
       };
     });
 
@@ -33,27 +36,27 @@ export function CashFlowChart({ transactions }: CashFlowChartProps) {
   }, [transactions]);
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
+    <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">{t('cashFlow')}</h2>
           <p className="text-sm text-gray-500">{t('cashFlowDescription')}</p>
         </div>
-        <div className="p-2 bg-blue-50 rounded-lg">
-          <LineChart className="w-5 h-5 text-blue-500" />
+        <div className="rounded-lg bg-blue-50 p-2">
+          <LineChart className="h-5 w-5 text-blue-500" />
         </div>
       </div>
       <div className="h-64">
         <div className="flex h-full items-end space-x-4">
           {monthlyData.map(({ month, income, expenses }) => (
-            <div key={month} className="flex-1 flex flex-col items-center">
+            <div key={month} className="flex flex-1 flex-col items-center">
               <div className="w-full space-y-1">
-                <div 
-                  className="bg-green-500 rounded-t"
+                <div
+                  className="rounded-t bg-green-500"
                   style={{ height: `${(income / 10000) * 100}px` }}
                 />
-                <div 
-                  className="bg-red-500 rounded-t"
+                <div
+                  className="rounded-t bg-red-500"
                   style={{ height: `${(expenses / 10000) * 100}px` }}
                 />
               </div>

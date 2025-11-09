@@ -12,7 +12,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
       <h1 className="text-3xl font-bold text-gray-900">
         {t('welcome')}, {user?.email}
       </h1>
-      <p className="text-gray-500 mt-2">{t('annualGoal')}</p>
+      <p className="mt-2 text-gray-500">{t('annualGoal')}</p>
     </header>
   );
 }

@@ -3,13 +3,13 @@
   :root {
     --color-primary: 79 70 229;
     --color-secondary: 99 102 241;
-    
+
     --bg-primary: 249 250 251;
     --bg-secondary: 255 255 255;
-    
+
     --text-primary: 17 24 39;
     --text-secondary: 107 114 128;
-    
+
     --border-color: 229 231 235;
     --card-bg: 255 255 255;
     --hover-bg: 243 244 246;
@@ -20,23 +20,23 @@
   }
 
   /* Dark mode colors */
-  [data-theme="dark"] {
+  [data-theme='dark'] {
     --color-primary: 129 140 248;
     --color-secondary: 165 180 252;
-    
+
     --bg-primary: 15 23 42;
     --bg-secondary: 30 41 59;
-    
+
     --text-primary: 248 250 252;
     --text-secondary: 203 213 225;
-    
+
     --border-color: 51 65 85;
     --card-bg: 30 41 59;
     --hover-bg: 51 65 85;
   }
 
   /* Compact mode */
-  [data-compact="true"] {
+  [data-compact='true'] {
     --spacing-base: 0.75rem;
     --card-padding: 1rem;
     --input-padding: 0.5rem;

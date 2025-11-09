@@ -13,19 +13,17 @@ export function PeriodSelector() {
 
   return (
     <div className="flex items-center space-x-4 py-4">
-      <div className="p-2 bg-blue-50 rounded-lg">
-        <Calendar className="w-5 h-5 text-blue-500" />
+      <div className="rounded-lg bg-blue-50 p-2">
+        <Calendar className="h-5 w-5 text-blue-500" />
       </div>
-      
+
       <div className="flex rounded-lg border border-gray-200 p-1">
         {periods.map(({ id, label }) => (
           <button
             key={id}
             onClick={() => setPeriod(id)}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-              period === id
-                ? 'bg-blue-500 text-white'
-                : 'text-gray-600 hover:bg-gray-50'
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+              period === id ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-50'
             }`}
           >
             {label}

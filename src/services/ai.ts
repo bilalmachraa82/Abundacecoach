@@ -1,7 +1,9 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Transaction } from '../types/finance';
+import { config } from '../config/env';
+import { logger } from '../utils/logger';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(config.gemini.apiKey);
 
 interface FinancialContext {
   transactions: Transaction[];
@@ -25,9 +27,12 @@ export async function getFinancialAdvice(prompt: string, context: FinancialConte
       Taxa de Poupança: ${context.savingsRate}%
       
       Transações recentes:
-      ${context.transactions.slice(0, 3).map(t => 
-        `- ${t.type === 'income' ? 'Rendimento' : 'Despesa'}: ${t.amount}€ (${t.category})`
-      ).join('\n')}
+      ${context.transactions
+        .slice(0, 3)
+        .map(
+          t => `- ${t.type === 'income' ? 'Rendimento' : 'Despesa'}: ${t.amount}€ (${t.category})`
+        )
+        .join('\n')}
 
       Pergunta: ${prompt}
 
@@ -45,7 +50,10 @@ export async function getFinancialAdvice(prompt: string, context: FinancialConte
     const response = await result.response;
     return response.text();
   } catch (error) {
-    console.error('AI processing failed:', error);
+    logger.error('AI processing failed', error as Error, {
+      prompt,
+      contextSummary: 'financial advice',
+    });
     return 'Desculpa, mas estou com algumas dificuldades neste momento. Podes tentar novamente?';
   }
 }
@@ -56,10 +64,13 @@ export async function analyzeSpendingPatterns(transactions: Transaction[]) {
 
     const monthlySpending = transactions
       .filter(t => t.type === 'expense')
-      .reduce((acc, t) => {
-        acc[t.category] = (acc[t.category] || 0) + t.amount;
-        return acc;
-      }, {} as Record<string, number>);
+      .reduce(
+        (acc, t) => {
+          acc[t.category] = (acc[t.category] || 0) + t.amount;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
 
     const prompt = `
       Como consultor financeiro português, analisa os seguintes padrões de despesa:
@@ -79,7 +90,9 @@ export async function analyzeSpendingPatterns(transactions: Transaction[]) {
     const response = await result.response;
     return response.text();
   } catch (error) {
-    console.error('Spending analysis failed:', error);
+    logger.error('Spending analysis failed', error as Error, {
+      transactionCount: transactions.length,
+    });
     return 'Não consegui analisar os padrões de despesa neste momento.';
   }
 }

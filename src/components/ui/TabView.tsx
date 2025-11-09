@@ -16,12 +16,12 @@ export function TabView({ tabs, defaultTab }: TabViewProps) {
 
   return (
     <div>
-      <div className="flex space-x-2 mb-4 overflow-x-auto hide-scrollbar">
-        {tabs.map((tab) => (
+      <div className="hide-scrollbar mb-4 flex space-x-2 overflow-x-auto">
+        {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
+            className={`whitespace-nowrap rounded-lg px-4 py-2 transition-colors ${
               activeTab === tab.id
                 ? 'bg-indigo-600 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -32,9 +32,7 @@ export function TabView({ tabs, defaultTab }: TabViewProps) {
         ))}
       </div>
 
-      <div className="fade-in">
-        {tabs.find(tab => tab.id === activeTab)?.content}
-      </div>
+      <div className="fade-in">{tabs.find(tab => tab.id === activeTab)?.content}</div>
     </div>
   );
 }

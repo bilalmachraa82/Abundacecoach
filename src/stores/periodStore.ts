@@ -7,7 +7,7 @@ interface PeriodStore {
   setPeriod: (period: Period) => void;
 }
 
-export const usePeriodStore = create<PeriodStore>((set) => ({
+export const usePeriodStore = create<PeriodStore>(set => ({
   period: 'month',
-  setPeriod: (period) => set({ period }),
+  setPeriod: period => set({ period }),
 }));

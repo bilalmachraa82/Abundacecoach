@@ -46,14 +46,14 @@ export function PullToRefresh({ onRefresh, children }: PullToRefreshProps) {
       onTouchEnd={handleTouchEnd}
       className="min-h-full"
     >
-      <div 
-        className="flex items-center justify-center h-16 -mt-16 transition-transform"
+      <div
+        className="-mt-16 flex h-16 items-center justify-center transition-transform"
         style={{ transform: `translateY(${pullProgress * 64}px)` }}
       >
-        <RefreshCw 
-          className={`w-6 h-6 text-gray-400 transition-transform ${
+        <RefreshCw
+          className={`h-6 w-6 text-gray-400 transition-transform ${
             refreshing ? 'animate-spin' : `rotate-${Math.floor(pullProgress * 360)}deg`
-          }`} 
+          }`}
         />
       </div>
       {children}

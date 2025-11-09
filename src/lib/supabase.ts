@@ -1,7 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import { Database } from '../types/supabase';
+import { config } from '../config/env';
 
-export const supabase = createClient<Database>(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+/**
+ * Supabase client with validated configuration
+ * Best Practice 2025: Type-safe, validated environment variables
+ */
+export const supabase = createClient<Database>(config.supabase.url, config.supabase.anonKey);

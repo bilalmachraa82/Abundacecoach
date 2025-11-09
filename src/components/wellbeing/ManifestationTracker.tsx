@@ -5,7 +5,8 @@ import { useWellbeingStore } from '../../stores/wellbeingStore';
 export function ManifestationTracker() {
   const [goal, setGoal] = useState('');
   const [visualization, setVisualization] = useState('');
-  const { manifestations, addManifestationEntry, updateManifestationProgress } = useWellbeingStore();
+  const { manifestations, addManifestationEntry, updateManifestationProgress } =
+    useWellbeingStore();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,72 +15,74 @@ export function ManifestationTracker() {
       visualizations: [visualization],
       targetDate: new Date(),
       progress: 0,
-      milestones: []
+      milestones: [],
     });
     setGoal('');
     setVisualization('');
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
+    <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-green-100 rounded-lg">
-            <Target className="w-5 h-5 text-green-600" />
+          <div className="rounded-lg bg-green-100 p-2">
+            <Target className="h-5 w-5 text-green-600" />
           </div>
           <h2 className="text-lg font-semibold">Manifestações</h2>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+      <form onSubmit={handleSubmit} className="mb-6 space-y-4">
         <input
           type="text"
           value={goal}
-          onChange={(e) => setGoal(e.target.value)}
+          onChange={e => setGoal(e.target.value)}
           placeholder="Seu objetivo..."
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
+          className="w-full rounded-lg border px-4 py-2 focus:ring-2 focus:ring-green-500"
         />
         <textarea
           value={visualization}
-          onChange={(e) => setVisualization(e.target.value)}
+          onChange={e => setVisualization(e.target.value)}
           placeholder="Visualização detalhada..."
-          className="w-full h-24 px-4 py-2 border rounded-lg resize-none focus:ring-2 focus:ring-green-500"
+          className="h-24 w-full resize-none rounded-lg border px-4 py-2 focus:ring-2 focus:ring-green-500"
         />
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+          className="w-full rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600"
         >
-          <Plus className="w-4 h-4 inline-block mr-2" />
+          <Plus className="mr-2 inline-block h-4 w-4" />
           Adicionar Manifestação
         </button>
       </form>
 
       <div className="space-y-4">
-        {manifestations.map((manifestation) => (
-          <div key={manifestation.id} className="p-4 border rounded-lg">
-            <h3 className="font-medium mb-2">{manifestation.goal}</h3>
-            <div className="space-y-2 mb-4">
+        {manifestations.map(manifestation => (
+          <div key={manifestation.id} className="rounded-lg border p-4">
+            <h3 className="mb-2 font-medium">{manifestation.goal}</h3>
+            <div className="mb-4 space-y-2">
               {manifestation.visualizations.map((vis, index) => (
-                <p key={index} className="text-sm text-gray-600">{vis}</p>
+                <p key={index} className="text-sm text-gray-600">
+                  {vis}
+                </p>
               ))}
             </div>
             <div className="relative pt-1">
-              <div className="flex mb-2 items-center justify-between">
+              <div className="mb-2 flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">
+                  <span className="inline-block rounded-full bg-green-200 px-2 py-1 text-xs font-semibold uppercase text-green-600">
                     Progresso
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-semibold inline-block text-green-600">
+                  <span className="inline-block text-xs font-semibold text-green-600">
                     {manifestation.progress}%
                   </span>
                 </div>
               </div>
-              <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-200">
+              <div className="mb-4 flex h-2 overflow-hidden rounded bg-green-200 text-xs">
                 <div
                   style={{ width: `${manifestation.progress}%` }}
-                  className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+                  className="flex flex-col justify-center whitespace-nowrap bg-green-500 text-center text-white shadow-none"
                 />
               </div>
             </div>

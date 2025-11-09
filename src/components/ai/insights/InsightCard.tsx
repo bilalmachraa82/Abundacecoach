@@ -18,9 +18,8 @@ export function InsightCard({ transactions }: InsightCardProps) {
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    const savingsRate = monthlyIncome > 0 
-      ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100
-      : 0;
+    const savingsRate =
+      monthlyIncome > 0 ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100 : 0;
 
     return [
       {
@@ -28,25 +27,25 @@ export function InsightCard({ transactions }: InsightCardProps) {
         message: `${t('income')}: ${formatCurrency(monthlyIncome)} | ${t('expenses')}: ${formatCurrency(monthlyExpenses)}`,
         icon: TrendingUp,
         color: 'text-green-600',
-        bgColor: 'bg-green-50'
+        bgColor: 'bg-green-50',
       },
       {
         title: t('savingsRate'),
         message: t('currentSavingsRate', { rate: savingsRate.toFixed(1) }),
         icon: AlertCircle,
         color: savingsRate >= 20 ? 'text-green-600' : 'text-yellow-600',
-        bgColor: savingsRate >= 20 ? 'bg-green-50' : 'bg-yellow-50'
-      }
+        bgColor: savingsRate >= 20 ? 'bg-green-50' : 'bg-yellow-50',
+      },
     ];
   }, [transactions]);
 
   return (
     <>
       {insights.map((insight, index) => (
-        <div key={index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center space-x-3 mb-2">
-            <div className={`p-2 rounded-lg ${insight.bgColor}`}>
-              <insight.icon className={`w-5 h-5 ${insight.color}`} />
+        <div key={index} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+          <div className="mb-2 flex items-center space-x-3">
+            <div className={`rounded-lg p-2 ${insight.bgColor}`}>
+              <insight.icon className={`h-5 w-5 ${insight.color}`} />
             </div>
             <h3 className="font-medium text-gray-900">{insight.title}</h3>
           </div>

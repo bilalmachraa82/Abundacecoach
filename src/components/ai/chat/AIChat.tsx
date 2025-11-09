@@ -16,15 +16,15 @@ export function AIChat() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-      <div className="flex items-center space-x-3 p-4 border-b">
-        <div className="p-2 bg-purple-100 rounded-lg">
-          <MessageSquare className="w-5 h-5 text-purple-600" />
+    <div className="overflow-hidden rounded-xl bg-white shadow-sm">
+      <div className="flex items-center space-x-3 border-b p-4">
+        <div className="rounded-lg bg-purple-100 p-2">
+          <MessageSquare className="h-5 w-5 text-purple-600" />
         </div>
         <h3 className="font-semibold">{t('financialAssistant')}</h3>
       </div>
 
-      <div className="h-96 overflow-y-auto p-4 space-y-4">
+      <div className="h-96 space-y-4 overflow-y-auto p-4">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -32,39 +32,38 @@ export function AIChat() {
           >
             <div
               className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                msg.role === 'user'
-                  ? 'bg-purple-600 text-white'
-                  : 'bg-gray-100 text-gray-800'
+                msg.role === 'user' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-800'
               }`}
             >
               {msg.content}
+              {msg.isStreaming && (
+                <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-purple-600"></span>
+              )}
             </div>
           </div>
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-gray-100 rounded-lg px-4 py-2 animate-pulse">
-              {t('thinking')}
-            </div>
+            <div className="animate-pulse rounded-lg bg-gray-100 px-4 py-2">{t('thinking')}</div>
           </div>
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="p-4 border-t">
+      <form onSubmit={handleSubmit} className="border-t p-4">
         <div className="flex space-x-2">
           <input
             type="text"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={e => setMessage(e.target.value)}
             placeholder={t('askQuestion')}
-            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="flex-1 rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
+            className="rounded-lg bg-purple-600 px-4 py-2 text-white hover:bg-purple-700 disabled:opacity-50"
           >
-            <Send className="w-5 h-5" />
+            <Send className="h-5 w-5" />
           </button>
         </div>
       </form>

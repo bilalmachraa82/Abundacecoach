@@ -1,14 +1,17 @@
 import { translations } from '../i18n/pt-PT';
 
-export function t(key: keyof typeof translations, params?: Record<string, string | number>): string {
+export function t(
+  key: keyof typeof translations,
+  params?: Record<string, string | number>
+): string {
   let text = translations[key] || key;
-  
+
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
       text = text.replace(`{{${key}}}`, String(value));
     });
   }
-  
+
   return text;
 }
 

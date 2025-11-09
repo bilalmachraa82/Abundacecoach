@@ -11,13 +11,14 @@ export async function analyzeBankStatement(
   // Get existing transactions from local storage or API
   const existingTransactions = JSON.parse(localStorage.getItem('transactions') || '[]');
   const missingTransactions: Partial<Transaction>[] = [];
-  
+
   // Find transactions in bank statement that aren't in our system
   for (const bankTx of bankTransactions) {
-    const exists = existingTransactions.some((tx: Transaction) => 
-      tx.date.split('T')[0] === bankTx.date?.toISOString().split('T')[0] &&
-      tx.amount === bankTx.amount &&
-      tx.type === bankTx.type
+    const exists = existingTransactions.some(
+      (tx: Transaction) =>
+        tx.date.split('T')[0] === bankTx.date?.toISOString().split('T')[0] &&
+        tx.amount === bankTx.amount &&
+        tx.type === bankTx.type
     );
 
     if (!exists) {
@@ -44,6 +45,6 @@ ${missingTransactions.length > 0 ? '\nAs transações em falta foram adicionadas
 
   return {
     summary,
-    missingTransactions
+    missingTransactions,
   };
 }

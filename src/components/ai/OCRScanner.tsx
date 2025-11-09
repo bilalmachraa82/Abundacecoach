@@ -13,12 +13,14 @@ export function OCRScanner({ onClose, onScanComplete }: OCRScannerProps) {
   const [processing, setProcessing] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const processImage = async (file: File) => {
     try {
       setProcessing(true);
       const worker = await createWorker('eng');
-      const { data: { text } } = await worker.recognize(file);
+      const {
+        data: { text },
+      } = await worker.recognize(file);
       await worker.terminate();
 
       const extractedData = extractReceiptData(text);
@@ -42,29 +44,29 @@ export function OCRScanner({ onClose, onScanComplete }: OCRScannerProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-md rounded-xl bg-white p-6">
+        <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Scan Receipt</h3>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
-            <X className="w-5 h-5" />
+          <button onClick={onClose} className="rounded-full p-2 hover:bg-gray-100">
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div 
-          className="aspect-video bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer"
+        <div
+          className="mb-4 flex aspect-video cursor-pointer items-center justify-center rounded-lg bg-gray-100"
           onClick={() => fileInputRef.current?.click()}
         >
           {processing ? (
             <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-2" />
+              <div className="mx-auto mb-2 h-8 w-8 animate-spin rounded-full border-b-2 border-purple-600" />
               <p className="text-sm text-gray-500">Processing receipt...</p>
             </div>
           ) : preview ? (
             <img src={preview} alt="Receipt preview" className="max-h-full rounded-lg" />
           ) : (
             <div className="text-center">
-              <Camera className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+              <Camera className="mx-auto mb-2 h-8 w-8 text-gray-400" />
               <p className="text-sm text-gray-500">Click to capture receipt</p>
             </div>
           )}

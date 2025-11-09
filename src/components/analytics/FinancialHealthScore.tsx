@@ -9,8 +9,10 @@ interface FinancialHealthScoreProps {
 }
 
 export function FinancialHealthScore({ transactions }: FinancialHealthScoreProps) {
-  const { score, breakdown } = React.useMemo(() => 
-    calculateFinancialHealthScore(transactions), [transactions]);
+  const { score, breakdown } = React.useMemo(
+    () => calculateFinancialHealthScore(transactions),
+    [transactions]
+  );
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-green-600';
@@ -25,41 +27,39 @@ export function FinancialHealthScore({ transactions }: FinancialHealthScoreProps
   };
 
   return (
-    <div className="bg-skin-card rounded-xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
+    <div className="rounded-xl bg-skin-card p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-skin-primary">Pontuação de Saúde Financeira</h2>
           <p className="text-sm text-skin-secondary">Indicador geral de bem-estar financeiro</p>
         </div>
-        <div className="p-2 bg-blue-50 rounded-lg">
-          <Activity className="w-5 h-5 text-blue-500" />
+        <div className="rounded-lg bg-blue-50 p-2">
+          <Activity className="h-5 w-5 text-blue-500" />
         </div>
       </div>
 
-      <div className="text-center mb-6">
-        <div className={`text-4xl font-bold ${getScoreColor(score || 0)} mb-2`}>
-          {score || 0}
-        </div>
-        <div className="text-sm text-skin-secondary">
-          de 100 pontos
-        </div>
+      <div className="mb-6 text-center">
+        <div className={`text-4xl font-bold ${getScoreColor(score || 0)} mb-2`}>{score || 0}</div>
+        <div className="text-sm text-skin-secondary">de 100 pontos</div>
       </div>
 
       <div className="space-y-4">
         {breakdown.map(({ category, score, maxScore, message }) => (
           <div key={category}>
-            <div className="flex justify-between text-sm mb-1">
+            <div className="mb-1 flex justify-between text-sm">
               <span className="text-skin-secondary">{category}</span>
-              <span className="font-medium text-skin-primary">{Math.round(score)}/{maxScore}</span>
+              <span className="font-medium text-skin-primary">
+                {Math.round(score)}/{maxScore}
+              </span>
             </div>
-            <div className="w-full bg-skin-hover rounded-full h-2">
+            <div className="h-2 w-full rounded-full bg-skin-hover">
               <div
                 className={`h-2 rounded-full ${getScoreBackground(score)}`}
                 style={{ width: `${(score / maxScore) * 100}%` }}
               />
             </div>
-            <p className="text-xs text-skin-secondary mt-1">
-              {category === 'Taxa de Poupança' 
+            <p className="mt-1 text-xs text-skin-secondary">
+              {category === 'Taxa de Poupança'
                 ? t('currentSavingsRate', { rate: score.toFixed(1) })
                 : message}
             </p>

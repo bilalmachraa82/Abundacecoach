@@ -12,11 +12,14 @@ interface ExpenseBreakdownProps {
 export function ExpenseBreakdown({ transactions }: ExpenseBreakdownProps) {
   const expensesByCategory = React.useMemo(() => {
     const expenses = transactions.filter(t => t.type === 'expense');
-    const groups = expenses.reduce((acc, t) => {
-      const group = getCategoryGroup(t.category);
-      acc[group] = (acc[group] || 0) + t.amount;
-      return acc;
-    }, {} as Record<string, number>);
+    const groups = expenses.reduce(
+      (acc, t) => {
+        const group = getCategoryGroup(t.category);
+        acc[group] = (acc[group] || 0) + t.amount;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return Object.entries(groups)
       .sort(([, a], [, b]) => b - a)
@@ -26,14 +29,14 @@ export function ExpenseBreakdown({ transactions }: ExpenseBreakdownProps) {
   const total = expensesByCategory.reduce((sum, [, amount]) => sum + amount, 0);
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
+    <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">{t('expenseBreakdown')}</h2>
           <p className="text-sm text-gray-500">{t('expenseBreakdownDescription')}</p>
         </div>
-        <div className="p-2 bg-blue-50 rounded-lg">
-          <PieChart className="w-5 h-5 text-blue-500" />
+        <div className="rounded-lg bg-blue-50 p-2">
+          <PieChart className="h-5 w-5 text-blue-500" />
         </div>
       </div>
       <div className="space-y-4">
@@ -45,11 +48,8 @@ export function ExpenseBreakdown({ transactions }: ExpenseBreakdownProps) {
                 <span className="text-gray-600">{t(category.toLowerCase())}</span>
                 <span className="font-medium">{formatCurrency(amount)}</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2">
-                <div 
-                  className="bg-blue-500 rounded-full h-2"
-                  style={{ width: `${percentage}%` }}
-                />
+              <div className="h-2 w-full rounded-full bg-gray-100">
+                <div className="h-2 rounded-full bg-blue-500" style={{ width: `${percentage}%` }} />
               </div>
             </div>
           );

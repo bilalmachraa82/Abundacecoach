@@ -1,14 +1,14 @@
 import React from 'react';
-import { 
-  LayoutDashboard, 
-  PiggyBank, 
-  LineChart, 
-  Target, 
-  Receipt, 
+import {
+  LayoutDashboard,
+  PiggyBank,
+  LineChart,
+  Target,
+  Receipt,
   Settings,
   Brain,
   Sparkles,
-  Heart
+  Heart,
 } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { t } from '../../utils/i18n';
@@ -27,13 +27,13 @@ const navigation = [
 
 export function Navigation() {
   const location = useLocation();
-  
+
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden md:block fixed left-0 top-0 h-full w-64 bg-skin-card border-r border-skin-border">
+      <nav className="fixed left-0 top-0 hidden h-full w-64 border-r border-skin-border bg-skin-card md:block">
         <div className="p-4">
-          <h1 className="text-2xl font-bold text-skin-primary mb-8">AbundanceCoach</h1>
+          <h1 className="mb-8 text-2xl font-bold text-skin-primary">AbundanceCoach</h1>
           <div className="space-y-2">
             {navigation.map(({ name, path, icon: Icon }) => (
               <Link
@@ -41,7 +41,7 @@ export function Navigation() {
                 to={path}
                 className={`nav-item ${location.pathname === path ? 'active' : 'hover:bg-skin-hover'}`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="h-5 w-5" />
                 <span className="font-medium capitalize">{t(name)}</span>
               </Link>
             ))}
@@ -50,18 +50,18 @@ export function Navigation() {
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-skin-card border-t border-skin-border safe-bottom">
+      <nav className="safe-bottom fixed bottom-0 left-0 right-0 border-t border-skin-border bg-skin-card md:hidden">
         <div className="grid grid-cols-5 gap-1 p-2">
           {navigation.slice(0, 5).map(({ name, path, icon: Icon }) => (
             <Link
               key={path}
               to={path}
-              className={`nav-item flex-col items-center justify-center py-2 px-1 ${
+              className={`nav-item flex-col items-center justify-center px-1 py-2 ${
                 location.pathname === path ? 'active' : ''
               }`}
             >
-              <Icon className="w-5 h-5" />
-              <span className="text-xs mt-1 capitalize">{t(name)}</span>
+              <Icon className="h-5 w-5" />
+              <span className="mt-1 text-xs capitalize">{t(name)}</span>
             </Link>
           ))}
         </div>

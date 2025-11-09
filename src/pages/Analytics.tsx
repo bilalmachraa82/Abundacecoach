@@ -18,13 +18,13 @@ export default function Analytics() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Financial Analytics - {period}</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <FinancialHealthScore transactions={transactions} />
         <PredictiveChart transactions={transactions} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <CashFlowChart transactions={transactions} />
         <ExpenseBreakdown transactions={transactions} />
       </div>

@@ -28,21 +28,16 @@ export default function Goals() {
         <h1 className="text-2xl font-bold text-gray-900">Financial Goals</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          className="flex items-center space-x-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         >
-          <Target className="w-5 h-5" />
+          <Target className="h-5 w-5" />
           <span>Add New Goal</span>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {goals.map((goal) => (
-          <GoalCard
-            key={goal.id}
-            name={goal.name}
-            target={goal.target}
-            current={goal.current}
-          />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {goals.map(goal => (
+          <GoalCard key={goal.id} name={goal.name} target={goal.target} current={goal.current} />
         ))}
       </div>
 
